@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Inventory</title>
+  <style type="text/css">
+    @font-face {font-family: coda_regular;src: url('coda_regular.ttf');}
+    html,body{margin:0;padding:0;}
+    h1,ul,figure{margin:0;padding: 0;font-size:1em;font-weight: normal;}
+    ul{height:100%;}
+    em{font-style:normal;}
+    #inventory{position:relative;margin:0 auto;width:100%;height:300px;background:#111;white-space:nowrap;overflow-x: scroll; overflow-y: hidden;font-family:coda_regular,sans-serif;font-size:15px;}
+    .inventory-item{position:relative;display:inline-block;width:200px;height:99%;margin:0 0 0 10px;text-align: center;border:1px solid #59fbea;background:rgb(0, 79, 74);color:#59fbea;overflow:hidden;}
+    .inventory-item:first-child{margin-left:0;}
+    .inventory-item h1{margin-bottom:5px;}
+    .inventory-accesslevel, .inventory-resourcetype{font-weight:bold;}
+    figure{position: absolute;top:30px;left:10px;right:10px;bottom:0;}
+    figure img{max-width: 100%;max-height: 100%;}
+    figure figcaption{position: absolute;bottom:0;left:0;right:0;min-height:20px;font-size:11px;overflow:hidden;padding:3px;background:rgb(0, 79, 74);white-space:normal;}
+    inventory-distance{color:#ebbc4a;}
+  </style>
+
+  <script src="popup.js"></script>
+  </head>
+  <body>
+    <div class="inventory" id="inventory"></div>
+  </body>
+</html>

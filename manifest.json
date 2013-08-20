@@ -1,0 +1,42 @@
+{
+  "name": "IIC - Ingress Intel Client",
+  "version": "0.1",
+  "description": "Adds client functionality to your browser.",
+  "permissions": [
+    "cookies",
+    "*://www.ingress.com/*",
+    "*://m-dot-betaspike.appspot.com/*"
+  ],
+  "background": { "page": "background.html" },
+  "manifest_version": 2,
+  "sandbox": {
+    "pages": ["sandbox.html"]
+    },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
+    "default_title": "Ingress Client",
+    "default_popup": "popup.html"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [ "*://www.ingress.com/*" ],
+      "js" : ["client_ingress.js"]
+    },
+    {
+      "matches" : [ "*://m-dot-betaspike.appspot.com/*" ],
+      "js" : [ "client_betaspike.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "client_inject.js"
+  ]
+}

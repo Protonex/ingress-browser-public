@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <body>
+    <script id="inventory" class="template" type="text/x-template">
+      {{? data.resonators.length > 0
+        || data.burster.length > 0
+        || data.shields.length > 0
+        || data.keys.length > 0
+      }}
+      <ul>
+        {{~ data.resonators :resonator:level }}
+        <li class="inventory-item inventory-resonator">
+          <h1>
+            <em class="inventory-accesslevel">L{{= level + 1 }}</em>
+            <em class="inventory-resourcetype">Resonator</em>
+            (<em class="inventory-amount">{{= resonator.guids.length }}</em>)
+          </h1>
+          <figure>
+            <img class="inventory-resourceimage" src="" />
+            <figcaption class="inventory-rarity">Very_Common</figcaption>
+          </figure>
+        </li>
+        {{~}}
+        {{~ data.burster :burster:level }}
+        <li class="inventory-item inventory-burster">
+          <h1>
+            <em class="inventory-accesslevel">L{{= level + 1 }}</em>
+            <em class="inventory-resourcetype">Xmp Burster</em>
+            (<em class="inventory-amount">{{= burster.guids.length }}</em>)
+          </h1>
+          <figure>
+            <img class="inventory-resourceimage" src="" />
+            <figcaption class="inventory-rarity">Very_Common</figcaption>
+          </figure>
+        </li>
+        {{~}}
+        {{ for(var rarity in data.shields) { }}
+        <li class="inventory-item inventory-shield">
+          <h1>
+            <em class="inventory-resourcetype">Portal Shield</em>
+            (<em class="inventory-amount">{{= data.shields[rarity].length }}</em>)
+          </h1>
+          <figure>
+            <img class="inventory-resourceimage" src="" />
+            <figcaption class="inventory-rarity">{{= rarity }}</figcaption>
+          </figure>
+        </li>
+        {{ } }}
+        {{ for(var guid in data.keys) { }}
+        <li class="inventory-item inventory-key">
+          <h1>
+            <em class="inventory-resourcetype">Portal Key</em>
+            (<em class="inventory-amount">{{= data.keys[guid].length }}</em>)
+          </h1>
+          <figure>
+            <img class="inventory-resourceimage" src="{{= data.keys[guid][0].image }}" />
+            <figcaption>
+              <div class="inventory-title">{{= data.keys[guid][0].title }}</div>
+              <div class="inventory-address">{{= data.keys[guid][0].address }}</div>
+              <div class="inventory-distance">0km</div>
+            </figcaption>
+          </figure>
+        </li>
+        {{ } }}
+      </ul>
+      {{??}}
+      <div>No Items.</div>
+      {{?}}
+
+      <!--
+      <label>
+        Item Filter:
+        <select>
+          <option>[[ ALL ]]</option>
+          <option>Media</option>
+          <option>Mods</option>
+          <option>Portal Keys</option>
+          <option>Weapons</option>
+        </select>
+      </label>
+      -->
+    </script>
+
+    <script src="dot.js"></script>
+    <script>
+      var Aps = Array.prototype.slice,
+          templates_elements = Aps.call(document.querySelectorAll(".template")),
+          templates = {},
+          i;
+
+      doT.templateSettings.varname = "data";
+
+      for (i = 0, len = templates_elements.length; i < len; i += 1) {
+        templates[templates_elements[i].id] = doT.template(templates_elements[i].innerHTML);
+        templates_elements[i].parentNode.removeChild(templates_elements[i]);
+      }
+
+      window.addEventListener("message", function (event) {
+        var data = event.data,
+            command = data.command,
+            name = data.name;
+        switch(command) {
+          case "render":
+            event.source.postMessage({
+              name: name,
+              html: templates[name](data.context)
+            }, event.origin);
+            break;
+        }
+      }, true);
+    </script>
+  </body>
+</html>
